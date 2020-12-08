@@ -1,6 +1,7 @@
 package com.mardillu.bulkdownloader;
 
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
@@ -31,7 +32,7 @@ public class ImageDownloaderHelper {
 
     public static WorkManager mWorkManager = WorkManager.getInstance();
     public static MessagerHandler.IncomingMessageHandler mHandler;
-    public static LocalData dbLocalData = new LocalData(BaseApplication.getAppContext());
+    public static LocalData dbLocalData;
     private static Constraints mConstraint = getConstraint();
     private static ArrayList<String> urls = null;
     private static String downloadDir = null;
@@ -42,6 +43,11 @@ public class ImageDownloaderHelper {
 
     public ImageDownloaderHelper setConstraint(Constraints mConstraint) {
         ImageDownloaderHelper.mConstraint = mConstraint;
+        return this;
+    }
+
+    public ImageDownloaderHelper with(Context context){
+        dbLocalData = new LocalData(context);
         return this;
     }
 
