@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="balakrishnan.me.bulkdownloader">
+    package="com.mardillu.bulkdownloader">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
