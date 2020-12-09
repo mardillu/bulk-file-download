@@ -7,8 +7,10 @@ import android.support.annotation.RestrictTo;
 public class DownloadStatusModel implements Parcelable {
     int success, failure, total;
     String value;
+    LocalData dbLocalData;
 
-    public DownloadStatusModel(String value) {
+    public DownloadStatusModel(String value, LocalData dbLocalData) {
+        this.dbLocalData = dbLocalData;
         this.value = value;
         this.total = getPersistedTotal();
         this.success = getPersistedSuccess();
@@ -49,35 +51,35 @@ public class DownloadStatusModel implements Parcelable {
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     private int getPersistedSuccess() {
-        return BaseApplication.getLocalData().getIntegerPreferenceValue(value + "Success");
+        return dbLocalData.getIntegerPreferenceValue(value + "Success");
     }
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     private void setSuccess(int success) {
         this.success = success;
-        BaseApplication.getLocalData().setIntegerPreferenceValue(value + "Success", success);
+        dbLocalData.setIntegerPreferenceValue(value + "Success", success);
     }
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     private int getPersistedFailure() {
-        return BaseApplication.getLocalData().getIntegerPreferenceValue(value + "Failure");
+        return dbLocalData.getIntegerPreferenceValue(value + "Failure");
     }
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     private void setFailure(int failure) {
         this.failure = failure;
-        BaseApplication.getLocalData().setIntegerPreferenceValue(value + "Failure", success);
+        dbLocalData.setIntegerPreferenceValue(value + "Failure", success);
     }
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     public int getPersistedTotal() {
-        return BaseApplication.getLocalData().getIntegerPreferenceValue(value + "Total");
+        return dbLocalData.getIntegerPreferenceValue(value + "Total");
     }
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     public void setTotal(int total) {
         this.total = total;
-        BaseApplication.getLocalData().setIntegerPreferenceValue(value + "Total", total);
+        dbLocalData.setIntegerPreferenceValue(value + "Total", total);
     }
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -104,9 +106,9 @@ public class DownloadStatusModel implements Parcelable {
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     public void resetState() {
-        BaseApplication.getLocalData().setIntegerPreferenceValue(value + "Failure", 0);
-        BaseApplication.getLocalData().setIntegerPreferenceValue(value + "Success", 0);
-        BaseApplication.getLocalData().setIntegerPreferenceValue(value + "Total", 0);
+        dbLocalData.setIntegerPreferenceValue(value + "Failure", 0);
+        dbLocalData.setIntegerPreferenceValue(value + "Success", 0);
+        dbLocalData.setIntegerPreferenceValue(value + "Total", 0);
     }
 
     public int getSuccess() {

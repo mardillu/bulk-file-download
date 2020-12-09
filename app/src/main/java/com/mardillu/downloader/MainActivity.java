@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
 //            urls.add("https://i.stack.imgur.com/NXVu6.jpg");
 //            urls.add("https://i.stack.imgur.com/NXVu6.jpg");
 
-            new ImageDownloaderHelper().setUrls(urls)
+            new ImageDownloaderHelper().with(this)
+                    .setUrls(urls)
                     .setDownloadStatus(getCallback())
                     .setDownloadDir(Environment.getExternalStorageDirectory() + "/MERGDATA/reference_Images")
                     .setCollectionId(100)

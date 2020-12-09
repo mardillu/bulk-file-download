@@ -108,7 +108,7 @@ public class ImageDownloaderHelper {
         dbLocalData.setStringPreferenceValue("value_" + collectionId, gsonToString(urls));
 //        Store size of collection in SharedPreference
         dbLocalData.setIntegerPreferenceValue(BulkDownloaderConstant.DownloadStatusFileName(collectionId), urls.size());
-        DownloadStatusModel downloadStatusModel = new DownloadStatusModel(BulkDownloaderConstant.DownloadStatusFileName(collectionId));
+        DownloadStatusModel downloadStatusModel = new DownloadStatusModel(BulkDownloaderConstant.DownloadStatusFileName(collectionId), dbLocalData);
         downloadStatusModel.setTotal(urls.size());
 //        Set input data -> Key for stored list :: value_ + collectionId
         data.putStringArray("value", new String[]{"value_" + collectionId, collectionId + ""});

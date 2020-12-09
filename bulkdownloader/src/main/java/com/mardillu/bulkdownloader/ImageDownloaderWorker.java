@@ -29,9 +29,11 @@ public class ImageDownloaderWorker extends Worker {
     private List<String> g;
     private LocalData localData;
     private String fileName;
+    private Context context;
 
     public ImageDownloaderWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+        this.context = context;
     }
 
     /**
@@ -51,9 +53,9 @@ public class ImageDownloaderWorker extends Worker {
         if (value == null) return Result.FAILURE;
         final String downloadDir = getInputData().getString("download_dir");
         fileName = value[0];
-        localData = new LocalData(getApplicationContext());
+        localData = new LocalData(context);
         g = toList(localData.getStringPreferenceValue(value[0]));
-        final DownloadStatusModel downloadStatusModel = new DownloadStatusModel(BulkDownloaderConstant.DownloadStatusFileName(Integer.parseInt(value[1])));
+        final DownloadStatusModel downloadStatusModel = new DownloadStatusModel(BulkDownloaderConstant.DownloadStatusFileName(Integer.parseInt(value[1])), localData);
         final CountDownLatch startSignal = new CountDownLatch(g.size());
         for (final String s : g) {
             Log.d(TAG, "run: " + android.util.Patterns.WEB_URL.matcher(s).matches());
