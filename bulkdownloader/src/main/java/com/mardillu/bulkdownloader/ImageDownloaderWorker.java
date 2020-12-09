@@ -2,7 +2,7 @@ package com.mardillu.bulkdownloader;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -50,7 +50,7 @@ public class ImageDownloaderWorker extends Worker {
     @Override
     public Result doWork() {
         String[] value = getInputData().getStringArray("value");
-        if (value == null) return Result.FAILURE;
+        if (value == null) return Result.failure();
         final String downloadDir = getInputData().getString("download_dir");
         fileName = value[0];
         localData = new LocalData(context);
@@ -60,7 +60,7 @@ public class ImageDownloaderWorker extends Worker {
         for (final String s : g) {
             Log.d(TAG, "run: " + android.util.Patterns.WEB_URL.matcher(s).matches());
 
-            final Result[] result = {Result.SUCCESS};
+            final Result[] result = {Result.success()};
             final Request request = new Request.Builder()
                     .url(s)
                     .build();
@@ -77,7 +77,7 @@ public class ImageDownloaderWorker extends Worker {
                     bundle.putString("image_name", "");
                     bundle.putParcelable("downloadStatusModel", downloadStatusModel);
                     MessagerHandler.sendMessage(1, "status", bundle);
-                    result[0] = Result.FAILURE;
+                    result[0] = Result.failure();
                     e.printStackTrace();
                 }
 
@@ -113,7 +113,7 @@ public class ImageDownloaderWorker extends Worker {
 
                     MessagerHandler.sendMessage(1, "status", bundle);
                     removeFromList(call.request().url().toString());
-                    result[0] = Result.SUCCESS;
+                    result[0] = Result.success();
                     startSignal.countDown();
                 }
             });
@@ -124,11 +124,11 @@ public class ImageDownloaderWorker extends Worker {
             downloadStatusModel.resetState();
             if (toList(localData.getStringPreferenceValue(fileName)).size() == 0)
                 ImageDownloaderHelper.removeFromWork(Integer.parseInt(value[1]));
-            return Result.SUCCESS;
+            return Result.failure();
         } catch (InterruptedException e) {
             Log.d("InterruptedException", "doWork: ");
             e.printStackTrace();
-            return Result.RETRY;
+            return Result.retry();
         }
     }
 

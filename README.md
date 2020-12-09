@@ -1,8 +1,8 @@
-# BulkDownloader
+# BulFile Downloader
 
 ### You can use this Downloader, where:
-You want to download 100's of images in background
-You want progress of each file being downloaded and total images downloaded.
+You want to download 100's of files in background
+You want progress of each file being downloaded and total files downloaded.
 
 ### What this can do:
 - You can download bunch of images in a go
@@ -25,7 +25,8 @@ follow below given method in the Activity or Fragment
 
 If you wanted to download a list of images then call BulkDownloader as follows
 ```java
-        new ImageDownloaderHelper().setUrls(ArrayList of urls))
+        new ImageDownloaderHelper().with(context)
+                    .setUrls(ArrayList of urls))
                     .setDownloadStatus(getCallback())
                     .setCollectionId(uniqueId)
                     .create();

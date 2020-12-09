@@ -2,7 +2,7 @@ package com.mardillu.bulkdownloader;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.RestrictTo;
+import androidx.annotation.RestrictTo;
 
 public class DownloadStatusModel implements Parcelable {
     int success, failure, total;

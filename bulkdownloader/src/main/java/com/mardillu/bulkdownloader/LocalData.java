@@ -2,7 +2,7 @@ package com.mardillu.bulkdownloader;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.RestrictTo;
+import androidx.annotation.RestrictTo;
 
 /**
  * A Class created to use the shared preference related functions

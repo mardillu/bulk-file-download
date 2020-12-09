@@ -1,10 +1,10 @@
 package com.mardillu.bulkdownloader;
 
-import android.arch.lifecycle.Observer;
+import androidx.lifecycle.Observer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -20,8 +20,8 @@ import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
-import androidx.work.WorkStatus;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
@@ -39,7 +39,7 @@ public class ImageDownloaderHelper {
     private static String url = null;
     private static DownloadStatus downloadStatus = null;
     private static int collectionId = 0;
-    private static Observer<WorkStatus> observe = null;
+    private static Observer<WorkInfo> observe = null;
 
     public ImageDownloaderHelper setConstraint(Constraints mConstraint) {
         ImageDownloaderHelper.mConstraint = mConstraint;
@@ -76,7 +76,7 @@ public class ImageDownloaderHelper {
         return this;
     }
 
-    public ImageDownloaderHelper addObserver(Observer<WorkStatus> observe) {
+    public ImageDownloaderHelper addObserver(Observer<WorkInfo> observe) {
         ImageDownloaderHelper.observe = observe;
         return this;
     }
@@ -117,10 +117,10 @@ public class ImageDownloaderHelper {
         mWorkManager.enqueue(work);
 //        Store UUID for later use
         dbLocalData.setStringPreferenceValue("imageDownloadWork" + collectionId, work.getId().toString());
-        getObserver(collectionId, new Observer<WorkStatus>() {
+        getObserver(collectionId, new Observer<WorkInfo>() {
             @Override
-            public void onChanged(@Nullable WorkStatus workStatus) {
-                if (workStatus.getState().isFinished())
+            public void onChanged(@Nullable WorkInfo workStatus) {
+                if (workStatus != null && workStatus.getState().isFinished())
                     removeFromWork(collectionId);
             }
         });
@@ -133,7 +133,7 @@ public class ImageDownloaderHelper {
         dbLocalData.delete("size_value_" + collectionID);
     }
 
-    public static void getObserver(int collectionID, Observer<WorkStatus> observe) {
+    public static void getObserver(int collectionID, Observer<WorkInfo> observe) {
         UUID uuid = UUID.fromString(dbLocalData.getStringPreferenceValue("imageDownloadWork" + collectionID));
 //        mWorkManager.getStatusById(uuid).;
 //        mWorkManager.getStatusById(uuid).observe(ProcessLifecycleOwner.get(), observe);

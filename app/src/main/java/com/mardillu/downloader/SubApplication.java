@@ -1,7 +1,7 @@
 package com.mardillu.downloader;
 
 import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.mardillu.bulkdownloader.BaseApplication;
 

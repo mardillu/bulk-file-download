@@ -1,6 +1,6 @@
 package com.mardillu.bulkdownloader;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 import android.util.Patterns;
 
 import java.lang.annotation.Retention;
