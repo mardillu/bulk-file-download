@@ -102,8 +102,13 @@ public class MessagerHandler {
                             failure++;
                         }
                         DownloadStatusModel downloadStatusModel = msg.getData().getParcelable("downloadStatusModel");
-                        if (downloadStatus != null)
-                            downloadStatus.DownloadedItems(downloadStatusModel.getTotal(), ((downloadStatusModel.getSuccess() + downloadStatusModel.getFailure()) * 100) / downloadStatusModel.getTotal(), downloadStatusModel.getSuccess(), downloadStatusModel.getFailure());
+                        if (downloadStatus != null) {
+                            if (downloadStatusModel.getTotal() != 0) {
+                                downloadStatus.DownloadedItems(downloadStatusModel.getTotal(), ((downloadStatusModel.getSuccess() + downloadStatusModel.getFailure()) * 100) / downloadStatusModel.getTotal(), downloadStatusModel.getSuccess(), downloadStatusModel.getFailure());
+                            } else {
+                                downloadStatus.DownloadedItems(downloadStatusModel.getTotal(), 0, downloadStatusModel.getSuccess(), downloadStatusModel.getFailure());
+                            }
+                        }
                     }
                     break;
                 case 2:
