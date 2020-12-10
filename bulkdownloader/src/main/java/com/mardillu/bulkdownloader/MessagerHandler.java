@@ -1,5 +1,6 @@
 package com.mardillu.bulkdownloader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,7 +29,7 @@ public class MessagerHandler {
      * @param messageID unique id
      * @param params    message to sent
      */
-    public static void sendMessage(int messageID, @Nullable String params, @Nullable Bundle bundle) {
+    public static void sendMessage(int messageID, @Nullable String params, @Nullable Bundle bundle, Context context) {
         Messenger mActivityMessenger = null;
         if (ImageDownloaderHelper.mHandler != null) {
             mActivityMessenger = new Messenger(ImageDownloaderHelper.mHandler);
@@ -38,7 +39,7 @@ public class MessagerHandler {
                     //Logic for progressing the notification
                     Intent intent = new Intent(BaseApplication.BULK_DOWNLOADER_NOTIFICATION);
                     intent.putExtra("downloadStatusModel",bundle.getParcelable("downloadStatusModel"));
-                    LocalBroadcastManager.getInstance(BaseApplication.getAppContext()).sendBroadcast(intent);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         }
         // If this service is launched by the JobScheduler, there's no callback Messenger. It

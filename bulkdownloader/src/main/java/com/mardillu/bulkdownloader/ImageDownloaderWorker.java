@@ -65,7 +65,7 @@ public class ImageDownloaderWorker extends Worker {
                     .url(s)
                     .build();
 
-            OkHttpClient client = CustomDownloadClient.getClient(true);
+            OkHttpClient client = CustomDownloadClient.getClient(true, context);
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
@@ -76,7 +76,7 @@ public class ImageDownloaderWorker extends Worker {
                     bundle.putString("download_dir", downloadDir);
                     bundle.putString("image_name", "");
                     bundle.putParcelable("downloadStatusModel", downloadStatusModel);
-                    MessagerHandler.sendMessage(1, "status", bundle);
+                    MessagerHandler.sendMessage(1, "status", bundle, context);
                     result[0] = Result.failure();
                     e.printStackTrace();
                 }
@@ -111,7 +111,7 @@ public class ImageDownloaderWorker extends Worker {
 
                     Log.d(TAG, "onResponse: " + downloadStatusModel.toString());
 
-                    MessagerHandler.sendMessage(1, "status", bundle);
+                    MessagerHandler.sendMessage(1, "status", bundle, context);
                     removeFromList(call.request().url().toString());
                     result[0] = Result.success();
                     startSignal.countDown();

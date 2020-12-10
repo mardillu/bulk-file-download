@@ -1,6 +1,7 @@
 package com.mardillu.bulkdownloader;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class CustomDownloadClient {
      * @param flag set as true to get % of downloaded file, false to get normal client
      * @return
      */
-    public static OkHttpClient getClient(Boolean flag) {
+    public static OkHttpClient getClient(Boolean flag, final Context context) {
         final String TAG = "DownloadedProcess";
         if (flag) {
 
@@ -47,7 +48,7 @@ public class CustomDownloadClient {
                                                     bundle.putFloat("fileSize", contentLength);
                                                     bundle.putFloat("currentSize", bytesRead);
                                                     bundle.putString("url", url);
-                                                    MessagerHandler.sendMessage(2, "induvidualProgress", bundle);
+                                                    MessagerHandler.sendMessage(2, "induvidualProgress", bundle, context);
                                                 }
                                             }
                                         }, originalResponse.request().url().toString()))

@@ -40,6 +40,7 @@ public class ImageDownloaderHelper {
     private static DownloadStatus downloadStatus = null;
     private static int collectionId = 0;
     private static Observer<WorkInfo> observe = null;
+    private static Context context;
 
     public ImageDownloaderHelper setConstraint(Constraints mConstraint) {
         ImageDownloaderHelper.mConstraint = mConstraint;
@@ -47,7 +48,8 @@ public class ImageDownloaderHelper {
     }
 
     public ImageDownloaderHelper with(Context context){
-        dbLocalData = new LocalData(context);
+        ImageDownloaderHelper.dbLocalData = new LocalData(context);
+        ImageDownloaderHelper.context = context;
         return this;
     }
 
@@ -214,7 +216,7 @@ public class ImageDownloaderHelper {
             final CountDownLatch countDownLatch = new CountDownLatch(1);
             final String[] reqResponse = new String[2];
 
-            CustomDownloadClient.getClient(false).newCall(request).enqueue(new Callback() {
+            CustomDownloadClient.getClient(false, ImageDownloaderHelper.context).newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     countDownLatch.countDown();
